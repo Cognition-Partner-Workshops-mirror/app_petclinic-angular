@@ -1,4 +1,4 @@
-# Spring Petclinic Angular 
+# Spring Petclinic Angular
 
 [![Build Status](https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml)
 
