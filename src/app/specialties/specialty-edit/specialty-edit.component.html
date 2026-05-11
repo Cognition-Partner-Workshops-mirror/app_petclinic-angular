@@ -1,6 +1,6 @@
 <!--
   ~ /*
-  ~  * Copyright 2017-2018 the original author or authors.
+  ~  * Copyright 2016-2017 the original author or authors.
   ~  *
   ~  * Licensed under the Apache License, Version 2.0 (the "License");
   ~  * you may not use this file except in compliance with the License.
@@ -16,29 +16,32 @@
   ~  */
   -->
 
-  <div class="container-fluid">
-    <div class="container xd-container">
-      <h2>Edit Specialty</h2>
-      <form id="specialty" class="form-horizontal" (ngSubmit)="onSubmit(specialtyForm.value)" #specialtyForm="ngForm">
-        <div class="form-group" hidden="true">
-          <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="specialty.id" name="id"/>
-        </div>
-        <div class="form-group has-feedback">
-          <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty && !name.valid">
-            <label class="col-sm-1 control-label">Name</label>
-            <div class="col-sm-6">
-              <input id="name" name="name" class="form-control" type="text"  minlength="1" maxlength="80" pattern="^[A-Za-z0-9].{0,79}$" required [(ngModel)]="specialty.name" #name="ngModel"/>
-              <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
-              <span class="help-block" *ngIf="name.dirty && name.hasError('maxlength')">Name may be only 80 characters long</span>
-              <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name must be at least 1 characters long</span>
-              <span class="help-block" *ngIf="name.dirty && name.hasError('pattern')">Name must begin with a letter or digit</span>
-              <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
-             </div>
-            <button class="btn btn-default" type="submit" [disabled]="!specialtyForm.valid">Update</button>
-            <button class="btn btn-default" (click)="onBack()">Cancel</button>
-          </div>
-        </div>
-      </form>
-    </div>
+<!-- Edit specialty form with pre-populated name field and validation -->
+<div>
+  <h2 class="pc-page-title">Edit Specialty</h2>
+  <div class="pc-card max-w-md">
+    <form (ngSubmit)="onSubmit(specialtyForm.value)" #specialtyForm="ngForm">
+      <div>
+        <input type="hidden" [(ngModel)]="specialty.id" name="id"/>
+        <label for="name" class="pc-label">Name</label>
+        <input type="text" class="pc-input" id="name" [(ngModel)]="specialty.name" name="name"
+               required #name="ngModel"
+               [class.pc-input-success]="name.dirty && name.valid"
+               [class.pc-input-error]="name.dirty && !name.valid"/>
+        <span class="pc-error" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
+      </div>
+
+      <!-- Form action buttons -->
+      <div class="flex gap-3 mt-8 pt-6 border-t border-gray-100">
+        <button class="pc-btn-secondary" type="button" (click)="onBack()">
+          <span class="material-icons mr-2 text-lg">arrow_back</span>
+          Back
+        </button>
+        <button class="pc-btn-primary" type="submit" [disabled]="!specialtyForm.valid">
+          <span class="material-icons mr-2 text-lg">save</span>
+          Update
+        </button>
+      </div>
+    </form>
   </div>
-  
+</div>

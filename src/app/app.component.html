@@ -16,74 +16,134 @@
   ~  */
   -->
 
-<div class="container-fluid main-wrapper">
-  <nav class="navbar navbar-default " role="navigation">
-  <div class="container-fluid">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#"><span></span></a>
-  </div>
+<!-- Material Sidenav container for responsive mobile/desktop navigation layout -->
+<mat-sidenav-container class="min-h-screen">
 
-  <ul class="nav navbar-nav">
-    <li>
-      <a routerLink="welcome" title="home page">
-        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-        <span> Home</span>
+  <!-- Mobile side navigation drawer - slides in from the left on small screens -->
+  <mat-sidenav #sidenav mode="over" [opened]="sidenavOpened" (closed)="sidenavOpened = false"
+    class="w-72 bg-white">
+    <div class="p-4 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <img src="./assets/images/spring-pivotal-logo.png" alt="Spring" class="h-8">
+        <span class="font-bold text-lg text-gray-800">PetClinic</span>
+      </div>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="welcome" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Home</span>
       </a>
-    </li>
+      <a mat-list-item routerLink="/owners" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>search</mat-icon>
+        <span matListItemTitle>Search Owners</span>
+      </a>
+      <a mat-list-item routerLink="/owners/add" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>person_add</mat-icon>
+        <span matListItemTitle>Add Owner</span>
+      </a>
+      <a mat-list-item routerLink="/vets" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>medical_services</mat-icon>
+        <span matListItemTitle>All Veterinarians</span>
+      </a>
+      <a mat-list-item routerLink="/vets/add" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>person_add</mat-icon>
+        <span matListItemTitle>Add Veterinarian</span>
+      </a>
+      <a mat-list-item routerLink="/pettypes" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>pets</mat-icon>
+        <span matListItemTitle>Pet Types</span>
+      </a>
+      <a mat-list-item routerLink="/specialties" (click)="sidenav.close()">
+        <mat-icon matListItemIcon>local_hospital</mat-icon>
+        <span matListItemTitle>Specialties</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-          aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Owners<span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/owners"><span class="glyphicon glyphicon-search"
-                                          aria-hidden="true"></span><span> Search</span></a></li>
-        <li><a routerLink="/owners/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span> Add New</span></a>
-        </li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-          aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Veterinarians<span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/vets"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span> All</span></a>
-        </li>
-        <li><a routerLink="/vets/add"><span class="glyphicon glyphicon-plus"
-                                            aria-hidden="true"></span><span> Add New</span></a></li>
-      </ul>
-    </li>
-    <li>
-      <a routerLink="/pettypes" routerLinkActive="active" title="pettypes">
-        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-        <span> Pet Types</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/specialties" routerLinkActive="active" title="specialties">
-        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-        <span> Specialties</span>
-      </a>
-    </li>
-  </ul>
+  <!-- Main content area containing toolbar, routed views, and footer -->
+  <mat-sidenav-content>
 
-  </div>
-  </nav>
-</div>
+    <!-- Top toolbar with Material design - responsive desktop nav and mobile hamburger -->
+    <mat-toolbar class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100 px-4">
+      <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <!-- Hamburger menu button - only visible on mobile -->
+          <button mat-icon-button class="md:hidden" (click)="sidenavOpened = !sidenavOpened">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <a routerLink="welcome" class="flex items-center gap-2 no-underline">
+            <img src="./assets/images/spring-pivotal-logo.png" alt="Spring" class="h-8">
+            <span class="font-bold text-lg text-gray-800 hidden sm:inline">PetClinic</span>
+          </a>
+        </div>
 
-<div class="content-wrapper">
-  <router-outlet></router-outlet>
-</div>
+        <!-- Desktop navigation links - hidden on mobile -->
+        <nav class="hidden md:flex items-center gap-1">
+          <a mat-button routerLink="welcome" routerLinkActive="text-blue-600">
+            <mat-icon class="mr-1 text-lg">home</mat-icon>
+            Home
+          </a>
 
-<br/>
-<br/>
-<div class="container footer-wrapper">
-  <div class="row">
-    <div class="col-12 text-center"><img src="./assets/images/angular.png"
-                                         alt="Angular" height="80" width="80"/>
-      <img src="./assets/images/spring-pivotal-logo.png"
-           alt="Sponsored by Pivotal"/></div>
-  </div>
-</div>
+          <!-- Owners dropdown menu using Material menu component -->
+          <button mat-button [matMenuTriggerFor]="ownersMenu">
+            <mat-icon class="mr-1 text-lg">people</mat-icon>
+            Owners
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #ownersMenu="matMenu">
+            <a mat-menu-item routerLink="/owners">
+              <mat-icon>search</mat-icon>
+              <span>Search</span>
+            </a>
+            <a mat-menu-item routerLink="/owners/add">
+              <mat-icon>person_add</mat-icon>
+              <span>Add New</span>
+            </a>
+          </mat-menu>
+
+          <!-- Veterinarians dropdown menu -->
+          <button mat-button [matMenuTriggerFor]="vetsMenu">
+            <mat-icon class="mr-1 text-lg">medical_services</mat-icon>
+            Veterinarians
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #vetsMenu="matMenu">
+            <a mat-menu-item routerLink="/vets">
+              <mat-icon>list</mat-icon>
+              <span>All</span>
+            </a>
+            <a mat-menu-item routerLink="/vets/add">
+              <mat-icon>person_add</mat-icon>
+              <span>Add New</span>
+            </a>
+          </mat-menu>
+
+          <a mat-button routerLink="/pettypes" routerLinkActive="text-blue-600">
+            <mat-icon class="mr-1 text-lg">pets</mat-icon>
+            Pet Types
+          </a>
+          <a mat-button routerLink="/specialties" routerLinkActive="text-blue-600">
+            <mat-icon class="mr-1 text-lg">local_hospital</mat-icon>
+            Specialties
+          </a>
+        </nav>
+      </div>
+    </mat-toolbar>
+
+    <!-- Routed page content area with responsive padding and max-width constraint -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 pb-24">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer with branding logos and copyright -->
+    <footer class="border-t border-gray-200 bg-white py-6">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
+        <div class="flex items-center gap-4">
+          <img src="./assets/images/angular.png" alt="Angular" class="h-10 w-10 opacity-60">
+          <img src="./assets/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal" class="h-8 opacity-60">
+        </div>
+        <p class="text-xs text-gray-400">Spring PetClinic Angular</p>
+      </div>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

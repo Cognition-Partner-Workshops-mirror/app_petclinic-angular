@@ -16,25 +16,41 @@
   ~  */
   -->
 
-<table [hidden]="deleteSuccess" class="table table-striped">
-  <tr>
-    <td valign="top">
-      <dl class="dl-horizontal">
-        <dt>Name</dt>
-        <dd>{{ pet.name }}</dd>
-        <dt>Birth Date</dt>
-        <dd>{{ pet.birthDate }}</dd>
-        <dt>Type</dt>
-        <dd *ngIf="!deleteSuccess">{{ pet.type.name }}</dd>
-        <button class="btn btn-default" (click)="editPet(pet)">Edit Pet</button>
-        <button class="btn btn-default" (click)="deletePet(pet)">Delete Pet</button>
-        <button class="btn btn-default" (click)="addVisit(pet)">Add Visit</button>
-
-      </dl>
-    </td>
-    <td valign="top">
+<!-- Pet detail card showing pet info, action buttons, and associated visits list -->
+<div [hidden]="deleteSuccess" class="pc-card mb-4">
+  <div class="flex flex-col md:flex-row md:items-start gap-6">
+    <!-- Pet details column with name, birth date, and type -->
+    <div class="flex-1">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="material-icons text-blue-600">pets</span>
+        <h3 class="font-semibold text-gray-800 text-lg">{{ pet.name }}</h3>
+      </div>
+      <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+        <div>
+          <p class="text-gray-400 text-xs uppercase font-semibold">Birth Date</p>
+          <p class="text-gray-700">{{ pet.birthDate }}</p>
+        </div>
+        <div>
+          <p class="text-gray-400 text-xs uppercase font-semibold">Type</p>
+          <p *ngIf="!deleteSuccess" class="text-gray-700">{{ pet.type.name }}</p>
+        </div>
+      </div>
+      <!-- Pet action buttons for edit, delete, and adding visits -->
+      <div class="flex flex-wrap gap-2">
+        <button class="pc-btn-secondary text-xs" (click)="editPet(pet)">
+          <span class="material-icons mr-1 text-sm">edit</span> Edit Pet
+        </button>
+        <button class="pc-btn-danger text-xs" (click)="deletePet(pet)">
+          <span class="material-icons mr-1 text-sm">delete</span> Delete Pet
+        </button>
+        <button class="pc-btn-primary text-xs" (click)="addVisit(pet)">
+          <span class="material-icons mr-1 text-sm">add</span> Add Visit
+        </button>
+      </div>
+    </div>
+    <!-- Visits column rendered via the visit-list child component -->
+    <div class="flex-1">
       <app-visit-list [visits]="pet.visits"></app-visit-list>
-    </td>
-  </tr>
-
-</table>
+    </div>
+  </div>
+</div>

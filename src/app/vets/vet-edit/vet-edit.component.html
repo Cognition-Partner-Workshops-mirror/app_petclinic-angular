@@ -16,55 +16,64 @@
   ~  */
   -->
 
-  <div class="container-fluid">
-    <div class="container xd-container">
-      <h2>Edit Veterinarian</h2>
-      <form id="vet_form" class="form-horizontal" (ngSubmit)="onSubmit(vetEditForm.value)" [formGroup]="vetEditForm">
-        <div class="form-group" hidden="true">
-          <input type="text" hidden="true" class="form-control" id="id" name="id" formControlName="id"/>
+<!-- Edit veterinarian form with reactive form fields and multi-select specialties -->
+<div>
+  <h2 class="pc-page-title">Edit Veterinarian</h2>
+  <div class="pc-card max-w-2xl">
+    <form id="vet_form" (ngSubmit)="onSubmit(vetEditForm.value)" [formGroup]="vetEditForm">
+      <div class="space-y-5">
+        <input type="hidden" formControlName="id"/>
+
+        <!-- First name field with pattern validation -->
+        <div>
+          <label for="firstName" class="pc-label">First Name</label>
+          <input type="text" class="pc-input" id="firstName" name="firstName"
+                 minlength="1" maxlength="30" pattern="^[A-Za-z]*$" required formControlName="firstName"
+                 [class.pc-input-success]="firstNameCtrl.dirty && firstNameCtrl.valid"
+                 [class.pc-input-error]="firstNameCtrl.dirty && !firstNameCtrl.valid"/>
+          <span class="pc-error" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('maxlength')">First Name may be only 30 characters long</span>
+          <span class="pc-error" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('minlength')">First Name must be at least 1 characters long</span>
+          <span class="pc-error" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('pattern')">First Name may only consist of letters</span>
+          <span class="pc-error" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('required')">First Name is required</span>
         </div>
-        <div class="form-group has-feedback" [class.has-success]="firstNameCtrl.dirty && firstNameCtrl.valid" [class.has-error]="firstNameCtrl.dirty &&  !firstNameCtrl.valid">
-          <label for="firstName" class="col-sm-2 control-label">First Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="firstName" name="firstName" minlength="1" maxlength="30" pattern="^[A-Za-z]*$"  required formControlName="firstName"/>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="firstNameCtrl.valid" [class.glyphicon-remove]="!firstNameCtrl.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('maxlength')">First Name may be only 30 characters long</span>
-            <span class="help-block" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('minlength')">First Name must be at least 1 characters long</span>
-             <span class="help-block" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('pattern')">First Name may only consist of letters</span>
-            <span class="help-block" *ngIf="firstNameCtrl.dirty && firstNameCtrl.hasError('required')">First Name is required</span>
-          </div>
+
+        <!-- Last name field with pattern validation -->
+        <div>
+          <label for="lastName" class="pc-label">Last Name</label>
+          <input type="text" class="pc-input" id="lastName" name="lastName"
+                 minlength="1" maxlength="30" pattern="^[A-Za-z]*$" required formControlName="lastName"
+                 [class.pc-input-success]="lastNameCtrl.dirty && lastNameCtrl.valid"
+                 [class.pc-input-error]="lastNameCtrl.dirty && !lastNameCtrl.valid"/>
+          <span class="pc-error" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('maxlength')">Last Name may be only 30 characters long</span>
+          <span class="pc-error" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('minlength')">Last Name must be at least 1 characters long</span>
+          <span class="pc-error" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('pattern')">Last Name may only consist of letters</span>
+          <span class="pc-error" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('required')">Last Name is required</span>
         </div>
-        <div class="form-group has-feedback" [class.has-success]="lastNameCtrl.dirty && lastNameCtrl.valid" [class.has-error]="lastNameCtrl.dirty && !lastNameCtrl.valid">
-          <label for="lastName" class="col-sm-2 control-label">Last Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="lastName" name="lastName" minlength="1" maxlength="30" pattern="^[A-Za-z]*$"  required formControlName="lastName"/>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="lastNameCtrl.valid" [class.glyphicon-remove]="!lastNameCtrl.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('maxlength')">Last Name may be only 30 characters long</span>
-            <span class="help-block" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('minlength')">Last Name must be at least 1 characters long</span>
-            <span class="help-block" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('pattern')">Last Name may only consist of letters</span>
-            <span class="help-block" *ngIf="lastNameCtrl.dirty && lastNameCtrl.hasError('required')">Last Name is required</span>
-          </div>
+
+        <!-- Multi-select specialties using Angular Material select component -->
+        <div>
+          <label for="spec" class="pc-label">Specialties</label>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-select [compareWith]="compareSpecFn" id="spec" name="specialties" formControlName="specialties" multiple>
+              <mat-option *ngFor="let specialty of specList" [value]="specialty">
+                {{ specialty.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="control-group">
-          <div class="form-group ">
-            <label for="spec" class="col-sm-2 control-label">Specialties</label>
-              <mat-form-field class="col-sm-10">
-                <mat-select  [compareWith]="compareSpecFn" id="spec" name="specialties" formControlName="specialties" multiple>
-                  <mat-option *ngFor="let specialty of specList" [value]="specialty">
-                    {{ specialty.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <br/>
-            <button class="btn btn-default" type="button" (click)="gotoVetList()">< Back</button>
-            <button class="btn btn-default" type="submit" [disabled]="vetEditForm.invalid">Save Vet</button>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <!-- Form action buttons -->
+      <div class="flex gap-3 mt-8 pt-6 border-t border-gray-100">
+        <button class="pc-btn-secondary" type="button" (click)="gotoVetList()">
+          <span class="material-icons mr-2 text-lg">arrow_back</span>
+          Back
+        </button>
+        <button class="pc-btn-primary" type="submit" [disabled]="vetEditForm.invalid">
+          <span class="material-icons mr-2 text-lg">save</span>
+          Save Vet
+        </button>
+      </div>
+    </form>
   </div>
-  
+</div>

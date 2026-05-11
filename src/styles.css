@@ -16,7 +16,94 @@
  *
  */
 
-/* You can add global styles to this file, and also import other style files */
-@import url('./assets/css/petclinic.css');
+/* Tailwind CSS base layers for utility-first styling */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Angular Material prebuilt theme - indigo-pink provides a clean modern palette */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
+/* Google Material Icons font for iconography throughout the app */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/* Inter font for modern, clean typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Global base styles applied across the entire PetClinic application */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafc;
+  color: #334155;
+}
+
+/* Angular Material form field override for consistent full-width rendering */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Angular Material raised button override to match the custom primary color palette */
+.mat-mdc-raised-button.mat-primary {
+  background-color: #2563eb;
+}
+
+/* Custom Tailwind component layer styles for reusable PetClinic UI patterns */
+@layer components {
+  /* Card container used across all main content sections */
+  .pc-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8;
+  }
+  /* Page title styling for section headings */
+  .pc-page-title {
+    @apply text-2xl md:text-3xl font-bold text-gray-800 mb-6;
+  }
+  /* Standard primary action button */
+  .pc-btn-primary {
+    @apply inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm;
+  }
+  /* Secondary/outline action button */
+  .pc-btn-secondary {
+    @apply inline-flex items-center px-4 py-2 bg-white text-gray-700 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors duration-200 text-sm;
+  }
+  /* Danger/destructive action button */
+  .pc-btn-danger {
+    @apply inline-flex items-center px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm;
+  }
+  /* Standard text input field styling */
+  .pc-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200;
+  }
+  /* Form field label styling */
+  .pc-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+  /* Validation error message text */
+  .pc-error {
+    @apply text-red-600 text-xs mt-1;
+  }
+  /* Success validation styling for input fields */
+  .pc-input-success {
+    @apply border-green-500 focus:ring-green-500 focus:border-green-500;
+  }
+  /* Error validation styling for input fields */
+  .pc-input-error {
+    @apply border-red-500 focus:ring-red-500 focus:border-red-500;
+  }
+  /* Styled data table used across list views */
+  .pc-table {
+    @apply w-full text-sm text-left;
+  }
+  .pc-table thead th {
+    @apply px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50 border-b border-gray-200;
+  }
+  .pc-table tbody td {
+    @apply px-4 py-3 border-b border-gray-100;
+  }
+  .pc-table tbody tr:hover {
+    @apply bg-blue-50/50;
+  }
+  .pc-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+}

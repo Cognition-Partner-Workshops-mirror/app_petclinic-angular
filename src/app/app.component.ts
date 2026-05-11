@@ -28,5 +28,6 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  /* Controls whether the mobile side navigation drawer is open or closed */
+  sidenavOpened = false;
 }

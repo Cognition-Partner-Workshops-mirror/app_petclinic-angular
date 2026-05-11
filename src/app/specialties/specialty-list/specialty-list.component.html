@@ -1,6 +1,6 @@
 <!--
   ~ /*
-  ~  * Copyright 2016-2018 the original author or authors.
+  ~  * Copyright 2016-2017 the original author or authors.
   ~  *
   ~  * Licensed under the Apache License, Version 2.0 (the "License");
   ~  * you may not use this file except in compliance with the License.
@@ -16,36 +16,46 @@
   ~  */
   -->
 
-<div class="container-fluid">
-  <div class="container xd-container">
+<!-- Specialties list page with data table and CRUD action buttons -->
+<div>
+  <h2 class="pc-page-title">Specialties</h2>
 
-    <h2>Specialties</h2>
-    <table id="specialties" class="table table-striped">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let specialty of specialties; let element_id=index">
-        <td>
-          <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="specialty.name" name="spec_name" />
-        </td>
-        <td>
-          <button class="btn btn-default" (click)="showEditSpecialtyComponent(specialty)">Edit</button>
-          <button class="btn btn-default" (click)="deleteSpecialty(specialty)">Delete</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <div *ngIf="isInsert">
-      <app-specialty-add (newSpeciality)="onNewSpecialty($event)">...</app-specialty-add>
+  <div class="pc-card">
+    <div class="overflow-x-auto">
+      <table id="specialties" class="pc-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let specialty of specialties">
+          <td class="font-medium text-gray-800">{{ specialty.name }}</td>
+          <td>
+            <div class="flex gap-2">
+              <button class="pc-btn-secondary text-xs" (click)="showEditSpecialtyComponent(specialty)">
+                <span class="material-icons mr-1 text-sm">edit</span> Edit
+              </button>
+              <button class="pc-btn-danger text-xs" (click)="deleteSpecialty(specialty)">
+                <span class="material-icons mr-1 text-sm">delete</span> Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div>
-      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="showAddSpecialtyComponent()"> Add </button>
+    <!-- Page-level action buttons -->
+    <div class="flex gap-3 mt-4 pt-4 border-t border-gray-100">
+      <button *ngIf="isSpecialitiesDataReceived" class="pc-btn-secondary" (click)="gotoHome()">
+        <span class="material-icons mr-2 text-lg">home</span>
+        Home
+      </button>
+      <button *ngIf="isSpecialitiesDataReceived" class="pc-btn-primary" (click)="showAddSpecialtyComponent()">
+        <span class="material-icons mr-2 text-lg">add</span>
+        Add
+      </button>
     </div>
   </div>
 </div>
