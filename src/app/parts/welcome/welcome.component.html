@@ -16,15 +16,44 @@
   ~  */
   -->
 
-<h1 class="title">Welcome to Petclinic</h1>
+<!-- Welcome/Home page with hero section and quick-access navigation cards -->
+<div class="text-center py-8 md:py-16">
+  <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">Welcome to PetClinic</h1>
+  <p class="text-gray-500 text-lg mb-8">Your trusted veterinary clinic management system</p>
 
-<div class="container-fluid">
-  <div class="container xd-container">
-
-    <h2>Welcome</h2>
-    <div class="row">
-      <div class="col-md-12">
-        <img class="img-responsive" src="./assets/images/pets.png" alt="pets logo"/>
-      </div>
-    </div>
+  <div class="pc-card max-w-lg mx-auto mb-12">
+    <img class="mx-auto rounded-lg max-w-full h-auto" src="./assets/images/pets.png" alt="pets logo"/>
   </div>
+
+  <!-- Quick-access navigation cards for common actions -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+    <a routerLink="/owners" class="pc-card hover:shadow-md transition-shadow duration-200 no-underline text-center group cursor-pointer">
+      <div class="text-blue-600 mb-3">
+        <span class="material-icons text-4xl">people</span>
+      </div>
+      <h3 class="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">Owners</h3>
+      <p class="text-sm text-gray-500 mt-1">Manage pet owners</p>
+    </a>
+    <a routerLink="/vets" class="pc-card hover:shadow-md transition-shadow duration-200 no-underline text-center group cursor-pointer">
+      <div class="text-green-600 mb-3">
+        <span class="material-icons text-4xl">medical_services</span>
+      </div>
+      <h3 class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">Veterinarians</h3>
+      <p class="text-sm text-gray-500 mt-1">View clinic staff</p>
+    </a>
+    <a routerLink="/pettypes" class="pc-card hover:shadow-md transition-shadow duration-200 no-underline text-center group cursor-pointer">
+      <div class="text-purple-600 mb-3">
+        <span class="material-icons text-4xl">pets</span>
+      </div>
+      <h3 class="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">Pet Types</h3>
+      <p class="text-sm text-gray-500 mt-1">Manage categories</p>
+    </a>
+    <a routerLink="/specialties" class="pc-card hover:shadow-md transition-shadow duration-200 no-underline text-center group cursor-pointer">
+      <div class="text-orange-600 mb-3">
+        <span class="material-icons text-4xl">local_hospital</span>
+      </div>
+      <h3 class="font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">Specialties</h3>
+      <p class="text-sm text-gray-500 mt-1">Vet specializations</p>
+    </a>
+  </div>
+</div>

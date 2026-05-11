@@ -16,25 +16,34 @@
   ~  */
   -->
 
-<table [hidden]="noVisits" class=" table table-condensed">
-  <thead>
-  <tr>
-    <th>Visit Date</th>
-    <th>Description</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tr *ngFor="let visit of visits">
-    <td>{{ visit.date }}</td>
-    <td>{{ visit.description }}</td>
-    <td>
-      <button class="btn btn-default" (click)="editVisit(visit)">Edit Visit</button>
-      <button class="btn btn-default" (click)="deleteVisit(visit)">Delete Visit</button>
-    </td>
-  </tr>
-</table>
-
-
-
-
-
+<!-- Visits table showing date, description, and action buttons for each visit -->
+<div [hidden]="noVisits">
+  <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Visits</h4>
+  <div class="overflow-x-auto">
+    <table class="pc-table">
+      <thead>
+      <tr>
+        <th>Visit Date</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let visit of visits">
+        <td class="text-gray-700 whitespace-nowrap">{{ visit.date }}</td>
+        <td class="text-gray-600">{{ visit.description }}</td>
+        <td>
+          <div class="flex gap-2">
+            <button class="pc-btn-secondary text-xs" (click)="editVisit(visit)">
+              <span class="material-icons mr-1 text-sm">edit</span> Edit
+            </button>
+            <button class="pc-btn-danger text-xs" (click)="deleteVisit(visit)">
+              <span class="material-icons mr-1 text-sm">delete</span> Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

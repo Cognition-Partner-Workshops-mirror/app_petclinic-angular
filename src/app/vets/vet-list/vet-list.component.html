@@ -16,39 +16,56 @@
   ~  */
   -->
 
-<div class="container-fluid">
-  <div class="container xd-container">
+<!-- Veterinarians list page with data table and action buttons -->
+<div>
+  <h2 class="pc-page-title">Veterinarians</h2>
 
-    <h2>Veterinarians</h2>
-
-    <table id="vets" class="table table-striped">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Specialties</th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let vet of vets">
-        <td>
-          {{ vet.firstName }} {{ vet.lastName }}
-        </td>
-        <td>
-          <div *ngFor="let spec of vet.specialties">
-            {{ spec.name }}
-          </div>
-        </td>
-        <td>
-          <button class="btn btn-default" (click)="editVet(vet)">Edit Vet</button>
-          <button class="btn btn-default" (click)="deleteVet(vet)">Delete Vet</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <div>
-      <button *ngIf="isVetDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button *ngIf="isVetDataReceived" class="btn btn-default" (click)="addVet()">Add Vet</button>
+  <div class="pc-card">
+    <div class="overflow-x-auto">
+      <table id="vets" class="pc-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specialties</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let vet of vets">
+          <td class="font-medium text-gray-800">
+            {{ vet.firstName }} {{ vet.lastName }}
+          </td>
+          <td>
+            <!-- Specialty name badges displayed as small chips -->
+            <span *ngFor="let spec of vet.specialties"
+                  class="inline-block bg-green-50 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full mr-1 mb-1">
+              {{ spec.name }}
+            </span>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <button class="pc-btn-secondary text-xs" (click)="editVet(vet)">
+                <span class="material-icons mr-1 text-sm">edit</span> Edit
+              </button>
+              <button class="pc-btn-danger text-xs" (click)="deleteVet(vet)">
+                <span class="material-icons mr-1 text-sm">delete</span> Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Page-level action buttons -->
+    <div class="flex gap-3 mt-4 pt-4 border-t border-gray-100">
+      <button *ngIf="isVetDataReceived" class="pc-btn-secondary" (click)="gotoHome()">
+        <span class="material-icons mr-2 text-lg">home</span>
+        Home
+      </button>
+      <button *ngIf="isVetDataReceived" class="pc-btn-primary" (click)="addVet()">
+        <span class="material-icons mr-2 text-lg">person_add</span>
+        Add Vet
+      </button>
     </div>
   </div>
+</div>

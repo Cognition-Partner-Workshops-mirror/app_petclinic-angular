@@ -1,24 +1,43 @@
-<div class="container-fluid">
-  <div class="container xd-container">
-    <h2>New Specialty</h2>
-    <form class="form-horizontal" (ngSubmit)="onSubmit(specialityForm.value)" #specialityForm="ngForm">
-      <div class="form-group" hidden="true">
-        <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="speciality.id" name="id" />
+<!--
+  ~ /*
+  ~  * Copyright 2016-2017 the original author or authors.
+  ~  *
+  ~  * Licensed under the Apache License, Version 2.0 (the "License");
+  ~  * you may not use this file except in compliance with the License.
+  ~  * You may obtain a copy of the License at
+  ~  *
+  ~  *      http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  * Unless required by applicable law or agreed to in writing, software
+  ~  * distributed under the License is distributed on an "AS IS" BASIS,
+  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  * See the License for the specific language governing permissions and
+  ~  * limitations under the License.
+  ~  */
+  -->
+
+<!-- Add new specialty form with name validation -->
+<div>
+  <h2 class="pc-page-title">New Specialty</h2>
+  <div class="pc-card max-w-md">
+    <form (ngSubmit)="onSubmit(specialtyForm.value)" #specialtyForm="ngForm">
+      <div>
+        <input type="hidden" [(ngModel)]="speciality.id" name="id"/>
+        <label for="name" class="pc-label">Name</label>
+        <input type="text" class="pc-input" id="name" [(ngModel)]="speciality.name" name="name"
+               required #name="ngModel"
+               [class.pc-input-success]="name.dirty && name.valid"
+               [class.pc-input-error]="name.dirty && !name.valid"
+               placeholder="Enter specialty name"/>
+        <span class="pc-error" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
       </div>
 
-      <div class="form-group has-feedback"   [class.has-success]="specialityName.dirty && specialityName.valid" [class.has-error]="specialityName.dirty &&  !specialityName.valid">
-        <div class="form-group">
-          <label class="col-sm-1 control-label">Name</label>
-          <div class="col-sm-6">
-            <input id="name" name="name" class="form-control"  minlength="1" maxlength="80" pattern="^[A-Za-z0-9].{0,79}$" required type="text" [(ngModel)]="speciality.name" #specialityName="ngModel" />
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="specialityName.valid" [class.glyphicon-remove]="!specialityName.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="specialityName.dirty && specialityName.hasError('maxlength')">Name may be only 80 characters long</span>
-            <span class="help-block" *ngIf="specialityName.dirty && specialityName.hasError('minlength')">Name must be at least 1 characters long</span>
-            <span class="help-block" *ngIf="specialityName.dirty && specialityName.hasError('pattern')">Name must begin with a letter or digit</span>
-            <span class="help-block" *ngIf="specialityForm.submitted || specialityName.dirty && specialityName.hasError('required')">Name is required</span>
-          </div>
-          <button class="btn btn-default" type="submit" [disabled]="!specialityForm.valid">Save</button>
-        </div>
+      <!-- Form submit button -->
+      <div class="flex gap-3 mt-8 pt-6 border-t border-gray-100">
+        <button class="pc-btn-primary" type="submit" [disabled]="!specialtyForm.valid">
+          <span class="material-icons mr-2 text-lg">save</span>
+          Save
+        </button>
       </div>
     </form>
   </div>
