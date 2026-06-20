@@ -61,7 +61,7 @@ describe('OwnerService', () => {
     // Inject the http, test controller, and service-under-test
     // as they will be referenced by each test.
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    let httpClient = TestBed.inject(HttpClient);
+    const httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject<HttpTestingController>(
       HttpTestingController as Type<HttpTestingController>
     );
@@ -106,7 +106,7 @@ describe('OwnerService', () => {
   });
 
   it('add owner', () => {
-    let owner = {
+    const owner = {
       id: 0,
       firstName: 'Mary',
       lastName: 'John',
@@ -138,7 +138,7 @@ describe('OwnerService', () => {
   });
 
   it('updateOwner', () => {
-    let owner = {
+    const owner = {
       id: 1,
       firstName: 'George',
       lastName: 'Franklin',
@@ -181,12 +181,14 @@ describe('OwnerService', () => {
 
     httpClientSpy.get.and.returnValue(asyncError(errorResponse));
 
-    ownerService.getOwnerById(1).subscribe((owners) => {
-      fail('Should have failed with 404 error'),
-      (error: HttpErrorResponse) => {
+    // Angular 22: fixed lint error - was using comma operator instead of proper subscribe args
+    ownerService.getOwnerById(1).subscribe({
+      next: () => fail('Should have failed with 404 error'),
+      error: (error: HttpErrorResponse) => {
         expect(error.status).toEqual(404);
         expect(error.error).toContain('404 error');
-      }});
+      }
+    });
 
       const req = httpTestingController.expectOne(
         { method: 'GET', url:ownerService.entityUrl + '/1' });

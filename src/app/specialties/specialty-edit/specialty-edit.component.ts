@@ -20,21 +20,28 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-specialty-edit',
   templateUrl: './specialty-edit.component.html',
-  styleUrls: ['./specialty-edit.component.css']
+  styleUrl: './specialty-edit.component.css'
 })
 export class SpecialtyEditComponent implements OnInit {
+  private specialtyService = inject(SpecialtyService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   specialty: Specialty;
   errorMessage: string;
 
-  constructor(private specialtyService: SpecialtyService, private route: ActivatedRoute, private router: Router) {
+
+  constructor() {
     this.specialty = {} as Specialty;
   }
 

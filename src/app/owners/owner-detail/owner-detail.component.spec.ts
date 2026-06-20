@@ -44,7 +44,7 @@ class OwnerServiceStub {
 describe('OwnerDetailComponent', () => {
   let component: OwnerDetailComponent;
   let fixture: ComponentFixture<OwnerDetailComponent>;
-  let ownerService = new OwnerServiceStub();
+  const ownerService = new OwnerServiceStub();
   let de: DebugElement;
   let el: HTMLElement;
   let router: Router;
@@ -113,19 +113,19 @@ describe('OwnerDetailComponent', () => {
 
   it('routing to owners page on click of editOwner,addPet,gotoOwnersList', () => {
     spyOn(router, 'navigate');
-    let buttons = fixture.debugElement.queryAll(By.css('button'));
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
 
-    let ownersListButton = buttons[0].nativeElement;
+    const ownersListButton = buttons[0].nativeElement;
     ownersListButton.click();
     spyOn(component, 'gotoOwnersList').and.callThrough();
     expect(router.navigate).toHaveBeenCalledWith(['/owners']);
 
-    let editOwnerButton = buttons[1].nativeElement;
+    const editOwnerButton = buttons[1].nativeElement;
     editOwnerButton.click();
     spyOn(component, 'editOwner').and.callThrough();
     expect(router.navigate).toHaveBeenCalledWith(['/owners']);
 
-    let addNewPetButton = buttons[2].nativeElement;
+    const addNewPetButton = buttons[2].nativeElement;
     addNewPetButton.click();
     spyOn(component, 'addPet').and.callThrough();
     expect(router.navigate).toHaveBeenCalledWith(['/owners']);

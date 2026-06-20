@@ -20,25 +20,31 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-specialty-list',
   templateUrl: './specialty-list.component.html',
-  styleUrls: ['./specialty-list.component.css']
+  styleUrl: './specialty-list.component.css'
 })
 export class SpecialtyListComponent implements OnInit {
+  private specService = inject(SpecialtyService);
+  private router = inject(Router);
+
   specialties: Specialty[];
   errorMessage: string;
   responseStatus: number;
   isInsert = false;
   isSpecialitiesDataReceived: boolean = false;
 
-  constructor(private specService: SpecialtyService, private router: Router) {
+
+  constructor() {
     this.specialties = [];
   }
 

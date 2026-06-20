@@ -20,21 +20,28 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-pettype-edit',
   templateUrl: './pettype-edit.component.html',
-  styleUrls: ['./pettype-edit.component.css']
+  styleUrl: './pettype-edit.component.css'
 })
 export class PettypeEditComponent implements OnInit {
+  private pettypeService = inject(PetTypeService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   pettype: PetType;
   errorMessage: string;
 
-  constructor(private pettypeService: PetTypeService, private route: ActivatedRoute, private router: Router) {
+
+  constructor() {
     this.pettype = {} as PetType;
   }
 

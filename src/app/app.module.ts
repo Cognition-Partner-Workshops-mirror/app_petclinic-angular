@@ -23,7 +23,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+// Angular 22: HttpClientModule replaced with provideHttpClient() in providers
+import {provideHttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {OwnersModule} from './owners/owners.module';
@@ -34,7 +35,8 @@ import {VetsModule} from './vets/vets.module';
 import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {HttpErrorHandler} from './error.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// Angular 22: BrowserAnimationsModule replaced with provideAnimations()
+import {provideAnimations} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -44,7 +46,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
+    // Angular 22: HttpClientModule removed from imports, using provideHttpClient() instead
     OwnersModule,
     PetsModule,
     VisitsModule,
@@ -52,11 +54,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     VetsModule,
     SpecialtiesModule,
     PartsModule,
-    BrowserAnimationsModule,
+    // Angular 22: BrowserAnimationsModule removed from imports, using provideAnimations() instead
     AppRoutingModule
   ],
   providers: [
     HttpErrorHandler,
+    // Angular 22: provideHttpClient() replaces HttpClientModule
+    provideHttpClient(),
+    // Angular 22: provideAnimations() replaces BrowserAnimationsModule
+    provideAnimations(),
   ],
   bootstrap: [AppComponent]
 })

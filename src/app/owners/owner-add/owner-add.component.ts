@@ -20,22 +20,28 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-owner-add',
   templateUrl: './owner-add.component.html',
-  styleUrls: ['./owner-add.component.css']
+  styleUrl: './owner-add.component.css'
 })
 export class OwnerAddComponent implements OnInit {
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
+
 
   owner: Owner;
   errorMessage: string;
 
-  constructor(private ownerService: OwnerService, private router: Router) {
+
+  constructor() {
     this.owner = {} as Owner;
   }
 

@@ -27,6 +27,8 @@ import {NavigationExtras} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 
 @Directive({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: '[appRouterLink]',
 })
 export class RouterLinkStubDirective {
@@ -39,7 +41,12 @@ export class RouterLinkStubDirective {
   }
 }
 
-@Component({selector: 'app-router-outlet', template: ''})
+@Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
+  selector: 'app-router-outlet',
+  template: ''
+})
 export class RouterOutletStubComponent {
 }
 
@@ -59,12 +66,13 @@ export class ActivatedRouteStub {
 
   // Test parameters
   // tslint:disable-next-line:variable-name
-  private _testParams: {};
+  // Angular 22: replaced empty object type {} with Record for strict type checking
+  private _testParams: Record<string, unknown>;
   get testParams() {
     return this._testParams;
   }
 
-  set testParams(params: {}) {
+  set testParams(params: Record<string, unknown>) {
     this._testParams = params;
     this.subject.next(params);
   }

@@ -62,7 +62,8 @@ export class HttpErrorHandler {
       console.error(error);
       console.error(`${serviceName}::${operation} failed: ${message}`);
 
-      return throwError(message);
+      // Angular 22 / RxJS 7: throwError now requires a factory function
+      return throwError(() => message);
     };
 
   }
