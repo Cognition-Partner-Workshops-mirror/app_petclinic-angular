@@ -39,7 +39,7 @@ const petRoutes: Routes = [
         component: PetEditComponent
       },
       {
-        path: 'visits\/add',
+        path: 'visits/add',
         component: VisitAddComponent
       }
     ]

@@ -20,24 +20,30 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-visit-list',
   templateUrl: './visit-list.component.html',
-  styleUrls: ['./visit-list.component.css']
+  styleUrl: './visit-list.component.css'
 })
 export class VisitListComponent implements OnInit {
+  private router = inject(Router);
+  private visitService = inject(VisitService);
+
 
   @Input() visits: Visit[];
   responseStatus: number;
   noVisits = false;
   errorMessage: string;
 
-  constructor(private router: Router, private visitService: VisitService) {
+
+  constructor() {
     this.visits = [];
   }
 

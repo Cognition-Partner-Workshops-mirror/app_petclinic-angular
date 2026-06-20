@@ -1,18 +1,23 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-pettype-add',
   templateUrl: './pettype-add.component.html',
-  styleUrls: ['./pettype-add.component.css']
+  styleUrl: './pettype-add.component.css'
 })
 export class PettypeAddComponent implements OnInit {
+  private pettypeService = inject(PetTypeService);
+
   pettype: PetType;
   errorMessage: string;
   @Output() newPetType = new EventEmitter<PetType>();
 
-  constructor(private pettypeService: PetTypeService) {
+
+  constructor() {
     this.pettype = {} as PetType;
   }
 

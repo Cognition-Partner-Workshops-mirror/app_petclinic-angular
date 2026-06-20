@@ -24,9 +24,11 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-page-not-found',
   templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.css']
+  styleUrl: './page-not-found.component.css'
 })
 export class PageNotFoundComponent implements OnInit {
 

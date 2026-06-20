@@ -20,25 +20,28 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-owner-edit',
   templateUrl: './owner-edit.component.html',
-  styleUrls: ['./owner-edit.component.css'],
+  styleUrl: './owner-edit.component.css',
 })
 export class OwnerEditComponent implements OnInit {
+  private ownerService = inject(OwnerService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   owner: Owner;
   errorMessage: string; // server error message
   ownerId: number;
-  constructor(
-    private ownerService: OwnerService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+
+  constructor() {
     this.owner = {} as Owner;
   }
 
@@ -51,7 +54,6 @@ export class OwnerEditComponent implements OnInit {
   }
 
   onSubmit(owner: Owner) {
-    const that = this;  
     const ownerId = this.route.snapshot.params.id;
     this.ownerService.updateOwner(ownerId , owner).subscribe(
       (res) => this.gotoOwnerDetail(owner),

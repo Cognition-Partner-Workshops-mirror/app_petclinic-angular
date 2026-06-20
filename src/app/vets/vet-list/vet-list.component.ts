@@ -20,24 +20,30 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-vet-list',
   templateUrl: './vet-list.component.html',
-  styleUrls: ['./vet-list.component.css']
+  styleUrl: './vet-list.component.css'
 })
 export class VetListComponent implements OnInit {
+  private vetService = inject(VetService);
+  private router = inject(Router);
+
   vets: Vet[];
   errorMessage: string;
   responseStatus: number;
   isVetDataReceived: boolean = false;
 
-  constructor(private vetService: VetService, private router: Router) {
+
+  constructor() {
     this.vets = [];
   }
 

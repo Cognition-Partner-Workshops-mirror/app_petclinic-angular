@@ -23,6 +23,8 @@
 import {Component} from '@angular/core';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   template: ''
 })
 export class DummyComponent {

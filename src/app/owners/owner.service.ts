@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Owner } from './owner';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -30,14 +30,17 @@ import { HandleError, HttpErrorHandler } from '../error.service';
 
 @Injectable()
 export class OwnerService {
+  private http = inject(HttpClient);
+  private httpErrorHandler = inject(HttpErrorHandler);
+
   entityUrl = environment.REST_API_URL + 'owners';
 
   private readonly handlerError: HandleError;
 
-  constructor(
-    private http: HttpClient,
-    private httpErrorHandler: HttpErrorHandler
-  ) {
+
+  constructor() {
+    const httpErrorHandler = this.httpErrorHandler;
+
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
@@ -60,13 +63,15 @@ export class OwnerService {
   }
 
 
-  updateOwner(ownerId: string, owner: Owner): Observable<{}> {
+  // Angular 22: replaced empty object type {} with object for TypeScript strict checking
+  updateOwner(ownerId: string, owner: Owner): Observable<object> {
     return this.http
       .put<Owner>(this.entityUrl + '/' + ownerId, owner)
       .pipe(catchError(this.handlerError('updateOwner', owner)));
   }
 
-  deleteOwner(ownerId: string): Observable<{}> {
+  // Angular 22: replaced empty object type {} with object for TypeScript strict checking
+  deleteOwner(ownerId: string): Observable<object> {
     return this.http
       .delete<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(catchError(this.handlerError('deleteOwner', [ownerId])));

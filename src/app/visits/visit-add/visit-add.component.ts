@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -29,15 +29,25 @@ import {Pet} from '../../pets/pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
 
-import * as moment from 'moment';
+// Angular 22: namespace import replaced with default import (esModuleInterop)
+import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-visit-add',
   templateUrl: './visit-add.component.html',
-  styleUrls: ['./visit-add.component.css']
+  // Angular 22: styleUrls (array) replaced with styleUrl (single string)
+  styleUrl: './visit-add.component.css'
 })
 export class VisitAddComponent implements OnInit {
+  private visitService = inject(VisitService);
+  private petService = inject(PetService);
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
 
   visit: Visit;
   currentPet: Pet;
@@ -46,11 +56,8 @@ export class VisitAddComponent implements OnInit {
   addedSuccess = false;
   errorMessage: string;
 
-  constructor(private visitService: VisitService,
-              private petService: PetService,
-              private ownerService: OwnerService,
-              private router: Router,
-              private route: ActivatedRoute) {
+
+  constructor() {
     this.visit = {} as Visit;
     this.currentPet = {} as Pet;
     this.currentOwner = {} as Owner;
@@ -77,7 +84,6 @@ export class VisitAddComponent implements OnInit {
 
   onSubmit(visit: Visit) {
     visit.id = null;
-    const that = this;
 
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
@@ -86,7 +92,7 @@ export class VisitAddComponent implements OnInit {
       newVisit => {
         this.visit = newVisit;
         this.addedSuccess = true;
-        that.gotoOwnerDetail();
+        this.gotoOwnerDetail();
       },
       error => this.errorMessage = error as any
     );

@@ -21,7 +21,7 @@
  */
 
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {Pet} from '../pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
@@ -30,14 +30,24 @@ import {PetTypeService} from '../../pettypes/pettype.service';
 import {PetService} from '../pet.service';
 import {OwnerService} from '../../owners/owner.service';
 
-import * as moment from 'moment';
+// Angular 22: namespace import replaced with default import (esModuleInterop)
+import moment from 'moment';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-pet-add',
   templateUrl: './pet-add.component.html',
-  styleUrls: ['./pet-add.component.css']
+  // Angular 22: styleUrls (array) replaced with styleUrl (single string)
+  styleUrl: './pet-add.component.css'
 })
 export class PetAddComponent implements OnInit {
+  private ownerService = inject(OwnerService);
+  private petService = inject(PetService);
+  private petTypeService = inject(PetTypeService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   pet: Pet;
   @Input() currentType: PetType;
   currentOwner: Owner;
@@ -45,8 +55,8 @@ export class PetAddComponent implements OnInit {
   addedSuccess = false;
   errorMessage: string;
 
-  constructor(private ownerService: OwnerService, private petService: PetService,
-              private petTypeService: PetTypeService, private router: Router, private route: ActivatedRoute) {
+
+  constructor() {
     this.pet = {} as Pet;
     this.currentOwner = {} as Owner;
     this.currentType = {} as PetType;

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {PetType} from '../pettype';
 import {Router} from '@angular/router';
 import {PetTypeService} from '../pettype.service';
@@ -6,18 +6,24 @@ import {Specialty} from '../../specialties/specialty';
 import { finalize } from 'rxjs/operators';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-pettype-list',
   templateUrl: './pettype-list.component.html',
-  styleUrls: ['./pettype-list.component.css']
+  styleUrl: './pettype-list.component.css'
 })
 export class PettypeListComponent implements OnInit {
+  private pettypeService = inject(PetTypeService);
+  private router = inject(Router);
+
   pettypes: PetType[];
   errorMessage: string;
   responseStatus: number;
   isPetTypesDataReceived: boolean = false;
   isInsert = false;
 
-  constructor(private pettypeService: PetTypeService, private router: Router) {
+
+  constructor() {
     this.pettypes = [] as PetType[];
   }
 

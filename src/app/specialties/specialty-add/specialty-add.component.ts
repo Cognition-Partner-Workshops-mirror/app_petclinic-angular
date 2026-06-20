@@ -16,30 +16,29 @@
  *
  */
 
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Specialty } from '../specialty';
 import { SpecialtyService } from '../specialty.service';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-specialty-add',
   templateUrl: './specialty-add.component.html',
-  styleUrls: ['./specialty-add.component.css'],
+  styleUrl: './specialty-add.component.css',
 })
 export class SpecialtyAddComponent implements OnInit {
+  private specialtyService = inject(SpecialtyService);
+
   @ViewChild('specialityForm', { static: true }) specialityForm: NgForm;
   speciality: Specialty;
   addedSuccess = false;
   errorMessage: string;
   @Output() newSpeciality = new EventEmitter<Specialty>();
 
-  constructor(private specialtyService: SpecialtyService) {
+
+  constructor() {
     this.speciality = {} as Specialty;
   }
 

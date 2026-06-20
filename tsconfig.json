@@ -5,19 +5,28 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
     "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "ES2022",
       "dom"
     ],
-    "module": "es2020",
-    "useDefineForClassFields": false
+    "module": "ES2022",
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    // Angular 22 / TypeScript 6: baseUrl is deprecated, this silences the warning
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "strictTemplates": true,

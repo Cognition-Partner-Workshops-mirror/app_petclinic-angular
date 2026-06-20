@@ -20,25 +20,33 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Specialty} from '../../specialties/specialty';
-import {SpecialtyService} from 'app/specialties/specialty.service';
+// Angular 22: non-relative imports no longer resolved via baseUrl, using relative path
+import {SpecialtyService} from '../../specialties/specialty.service';
 import {Vet} from '../vet';
 import {Router} from '@angular/router';
 import {VetService} from '../vet.service';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-vet-add',
   templateUrl: './vet-add.component.html',
-  styleUrls: ['./vet-add.component.css']
+  styleUrl: './vet-add.component.css'
 })
 export class VetAddComponent implements OnInit {
+  private specialtyService = inject(SpecialtyService);
+  private vetService = inject(VetService);
+  private router = inject(Router);
+
   vet: Vet;
   specialtiesList: Specialty[];
   selectedSpecialty: Specialty;
   errorMessage: string;
 
-  constructor(private specialtyService: SpecialtyService, private vetService: VetService, private router: Router) {
+
+  constructor() {
     this.vet = {} as Vet;
     this.selectedSpecialty = {} as Specialty;
     this.specialtiesList = [];

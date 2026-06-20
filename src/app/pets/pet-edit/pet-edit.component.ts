@@ -21,7 +21,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -29,26 +29,33 @@ import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
 import {PetTypeService} from '../../pettypes/pettype.service';
 
-import * as moment from 'moment';
+// Angular 22: namespace import replaced with default import (esModuleInterop)
+import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-pet-edit',
   templateUrl: './pet-edit.component.html',
-  styleUrls: ['./pet-edit.component.css']
+  // Angular 22: styleUrls (array) replaced with styleUrl (single string)
+  styleUrl: './pet-edit.component.css'
 })
 export class PetEditComponent implements OnInit {
+  private petService = inject(PetService);
+  private petTypeService = inject(PetTypeService);
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   pet: Pet;
   @Input() currentType: PetType;
   currentOwner: Owner;
   petTypes: PetType[];
   errorMessage: string;
 
-  constructor(private petService: PetService,
-              private petTypeService: PetTypeService,
-              private ownerService: OwnerService,
-              private router: Router,
-              private route: ActivatedRoute) {
+
+  constructor() {
     this.pet = {} as Pet;
     this.currentOwner = {} as Owner;
     this.currentType = {} as PetType;
@@ -77,7 +84,6 @@ export class PetEditComponent implements OnInit {
 
   onSubmit(pet: Pet) {
     pet.type = this.currentType;
-    const that = this;
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
 

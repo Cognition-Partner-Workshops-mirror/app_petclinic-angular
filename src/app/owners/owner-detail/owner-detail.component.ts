@@ -20,22 +20,29 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Owner} from '../owner';
 
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-owner-detail',
   templateUrl: './owner-detail.component.html',
-  styleUrls: ['./owner-detail.component.css']
+  styleUrl: './owner-detail.component.css'
 })
 export class OwnerDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private ownerService = inject(OwnerService);
+
   errorMessage: string;
   owner: Owner;
 
-  constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService) {
+
+  constructor() {
     this.owner = {} as Owner;
   }
 

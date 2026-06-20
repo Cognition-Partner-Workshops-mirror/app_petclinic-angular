@@ -24,9 +24,11 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
+  // Angular 22: explicitly set standalone to false (default changed to true)
+  standalone: false,
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
+  styleUrl: './welcome.component.css'
 })
 export class WelcomeComponent implements OnInit {
 

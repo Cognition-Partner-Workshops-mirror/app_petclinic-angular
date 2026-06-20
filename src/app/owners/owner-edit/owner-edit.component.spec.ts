@@ -81,8 +81,8 @@ describe('OwnerEditComponent', () => {
   });
 
   it('back button routing', async() => {
-    let buttons = fixture.debugElement.queryAll(By.css('button'));
-    let backbutton = buttons[0];
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    const backbutton = buttons[0];
     backbutton.triggerEventHandler('click', null);
     spyOn(component, 'gotoOwnerDetail').and.callThrough();
     expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
@@ -90,8 +90,8 @@ describe('OwnerEditComponent', () => {
 
  
   it('update owner', async(() => {
-    let buttons = fixture.debugElement.queryAll(By.css('button'));
-    let updateOwnerButton = buttons[1].nativeElement;
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    const updateOwnerButton = buttons[1].nativeElement;
     spyOn(component, 'onSubmit');
     updateOwnerButton.click();
     expect(component.onSubmit).toHaveBeenCalled();
